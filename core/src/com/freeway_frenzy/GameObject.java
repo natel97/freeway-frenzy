@@ -5,8 +5,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public abstract class GameObject {
 	
-	int x, y, width, height;
-	Texture tex;
+	protected int x, y, width, height;
+	protected Texture tex;
+	protected boolean draw;
 	
 	public GameObject(int x, int y, Texture tex, int width, int height) {
 		this.x = x;
@@ -14,6 +15,7 @@ public abstract class GameObject {
 		this.tex = tex;
 		this.width = width;
 		this.height = height;
+		this.draw = true;
 	}
 	
 	public GameObject() {}
@@ -27,7 +29,9 @@ public abstract class GameObject {
 	public abstract void step();
 	
 	public void draw(SpriteBatch batch) {
-		batch.draw(tex, x, y,width, height);
+		if(draw) {
+			batch.draw(tex, x, y,width, height);
+		}
 	}
 
 }	
