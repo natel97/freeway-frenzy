@@ -5,14 +5,13 @@ import com.freeway_frenzy.game_object.Destroyable;
 
 public class Car extends Destroyable{
 	
-	public Car(int x, int y) {
-		super(x, y, new Texture("badlogic.jpg"), 128, 256, 100, 5);
+	public Car(int x, int y, Direction dir) {
+		super(x, y, new Texture("car_red.png"), 128, 256, 100, 5, dir);
 	}
 
 	@Override
-	public void step() {
-		// TODO Auto-generated method stub
-		
+	public void step(Float delta) {
+		super.move(delta);
 	}
 
 }

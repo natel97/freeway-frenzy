@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.freeway_frenzy.screens.MainMenu;
 
@@ -19,9 +19,8 @@ public class FFGame extends Game {
 	
 	@Override
 	public void create () {
-
 		camera = new PerspectiveCamera();
-	    viewport = new FitViewport(1920, 1080, camera);
+	    viewport = new StretchViewport(1920, 1080, camera);
 		batch = new SpriteBatch();
 		setScreen(new MainMenu(this));
 	}

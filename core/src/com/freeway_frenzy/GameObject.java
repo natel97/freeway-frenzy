@@ -26,11 +26,11 @@ public abstract class GameObject {
 	public int getHeight() { return this.height; }
 	public Texture getImage() { return tex; };
 	
-	public abstract void step();
+	public abstract void step(Float delta);
 	
 	public void draw(SpriteBatch batch) {
 		if(draw) {
-			batch.draw(tex, x, y,width, height);
+			batch.draw(tex, x-width/2, y-height/2,width, height);
 		}
 	}
 
