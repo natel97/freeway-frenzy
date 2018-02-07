@@ -6,7 +6,9 @@ import java.util.stream.Collectors;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.freeway_frenzy.FFGame;
 import com.freeway_frenzy.GameObject;
 import com.freeway_frenzy.Positions;
@@ -16,6 +18,9 @@ import com.freeway_frenzy.game_object.destroyable.Car;
 public class MainMenu implements Screen {
 	
 	final int BOX_SIZE = 160;
+	final int XOFFSET = -20;
+	final int YOFFSET = 100;
+	final int SPACE_BETWEEN = 20;
 	
 	public enum position{
 		
@@ -24,12 +29,13 @@ public class MainMenu implements Screen {
 	private FFGame game;
 	private Texture tex;
 	private List<GameObject> objects;
+	private ShapeRenderer shapeRenderer;
 	
 	public MainMenu(FFGame game) {
 		this.game = game;
 		this.tex = new Texture("background.png");
-		objects = new LinkedList<GameObject>();
-		
+		objects = new LinkedList<>();
+		shapeRenderer = new ShapeRenderer();
 	}
 
 	@Override
@@ -54,11 +60,8 @@ public class MainMenu implements Screen {
 		
 		
 		//Before Drawing
-		objects.forEach(x -> {
-			x.step(delta);
-			
-		});
-		
+		objects.forEach(x -> x.step(delta));
+
 		objects = objects.stream().filter(x -> x.getY() < 1200).collect(Collectors.toList());
 		
 		
@@ -68,12 +71,16 @@ public class MainMenu implements Screen {
 		game.getSpriteBatch().draw(tex, 0, 0);
 		objects.stream().filter(x -> x.getY() < 1200).forEach(x -> x.draw(game.getSpriteBatch()));
 		
-		//Draw grid lines
-		
-		for(int x = 0; x < 1920; x+= BOX_SIZE) {
-			//Implement this!
-		}
-		
+		//Draw grid
+
+        for (Positions.DestroyerPositions pos : Positions.DestroyerPositions.values()) {
+            shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+            shapeRenderer.setColor(Color.RED);
+            shapeRenderer.rect(pos.x, pos.y, BOX_SIZE, BOX_SIZE);
+            shapeRenderer.end();
+        }
+
+
 		game.getSpriteBatch().end();
 		
 		//After Drawing
