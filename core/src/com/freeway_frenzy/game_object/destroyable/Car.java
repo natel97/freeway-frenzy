@@ -7,6 +7,7 @@ public class Car extends Destroyable{
 	
 	public Car(int x, int y, Direction dir) {
 		super(x, y, new Texture("car_red.png"), 128, 256, 100, 5, dir);
+		System.out.println("New Car object:\tX: " + x + "\tY: " + y);
 	}
 
 	@Override

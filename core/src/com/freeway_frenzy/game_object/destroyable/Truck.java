@@ -6,7 +6,8 @@ import com.freeway_frenzy.game_object.Destroyable;
 public class Truck extends Destroyable {
 
     public Truck(int x, int y, Direction dir) {
-        super(x, y, new Texture("car_red.png"), 128, 256, 120, 5, dir);
+        super(x, y, new Texture("truck_red.png"), 128, 256, 120, 5, dir);
+        System.out.println("New Truck object:\tX: " + x + "\tY: " + y);
     }
 
     @Override

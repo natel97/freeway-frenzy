@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.freeway_frenzy.screens.MainMenu;
+import com.freeway_frenzy.screens.MainGame;
 
 public class FFGame extends Game {
 	SpriteBatch batch;
@@ -22,7 +22,7 @@ public class FFGame extends Game {
 		camera = new PerspectiveCamera();
 	    viewport = new StretchViewport(1920, 1080, camera);
 		batch = new SpriteBatch();
-		setScreen(new MainMenu(this));
+		setScreen(new MainGame(this));
 	}
 
 	@Override
@@ -35,6 +35,7 @@ public class FFGame extends Game {
 	@Override
 	public void dispose () {
 	}
+	public Camera getCamera(){ return this.camera; }
 	
 	public SpriteBatch getSpriteBatch() { return this.batch; }
 }

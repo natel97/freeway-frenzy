@@ -40,4 +40,6 @@ public abstract class Destroyable extends GameObject {
 		super.y += (int)(dir.changeY * this.speed * delta * 60);
 	}
 
+	//TODO: somewhere: implement health bars on top of objects!
+
 }
