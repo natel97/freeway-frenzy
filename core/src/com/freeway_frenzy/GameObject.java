@@ -3,11 +3,9 @@ package com.freeway_frenzy;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.freeway_frenzy.game_object.base_classes.Destroyable;
 
-public abstract class GameObject extends Actor {
+public abstract class GameObject {
 	
 	protected int x, y, width, height;
 	protected Texture tex;
@@ -27,27 +25,34 @@ public abstract class GameObject extends Actor {
 	public GameObject() {}
 
 	public Texture getImage() { return tex; }
-	public GameObject setSelect(boolean bool){ this.selected = bool; return this; }
+	public GameObject setSelect(boolean bool) {
+		this.selected = !this.selected && bool;
+		return this;
+	}
 	public boolean isSelected() { return this.selected; }
-	public boolean isAtPosition(Vector3 vector){
-	    System.out.println(vector);
-	    return ((vector.x < (this.x + width/2)) && (vector.y < (this.y + height/2)) && (vector.x > (this.x - width/2)) && (vector.y > (this.y - height/2)));
+	public boolean isAtPosition(float x, float y){
+	    return ((x < (this.x + width/2)) && (y < (this.y + height/2)) && (x > (this.x - width/2)) && (y > (this.y - height/2)));
     }
 	
 	public abstract void step(Float delta);
-	
-	public void draw(SpriteBatch batch, ShapeRenderer shapeRenderer) {
+	public void draw(SpriteBatch batch){
 		if(draw) {
-			batch.draw(tex, x-width/2, y-height/2,width, height);
+			batch.draw(tex, x-(width/2), y-(height/2),width, height);
 		}
-
-		if(selected){
-		    shapeRenderer.setAutoShapeType(true);
-		    shapeRenderer.begin();
-            shapeRenderer.set(ShapeRenderer.ShapeType.Line);
-            shapeRenderer.rectLine(new Vector2(x-width/2, y-height/2), new Vector2(x+width/2, y+height/2), 2);
-            shapeRenderer.end();
+		else{
+			if(this.getClass() == Destroyable.class){
+				((Destroyable)this).destroyInstance();
+			}
 		}
 	}
+	public void draw(ShapeRenderer shapeRenderer) {
+		if(selected){
+			shapeRenderer.set(ShapeRenderer.ShapeType.Line);
+			shapeRenderer.rect(x-width/2, y-height/2, width, height);
+		}
+	}
+	public int getX() { return this.x; }
+	public int getY() { return this.y; }
+	public boolean isDraw() { return this.draw; }
 
-}	
+}
