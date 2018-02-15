@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.freeway_frenzy.game_object.base_classes.Destroyable;
+import com.freeway_frenzy.game_object.base_classes.GlobalVars;
 
 public abstract class GameObject {
 	

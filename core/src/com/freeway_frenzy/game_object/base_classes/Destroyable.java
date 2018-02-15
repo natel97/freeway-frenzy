@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 public abstract class Destroyable extends GameObject {
+	private GlobalVars globalVars;
 	public void destroyInstance() {
 		these.remove(this);
 	}
@@ -33,8 +34,9 @@ public abstract class Destroyable extends GameObject {
 	private ConcurrentLinkedQueue<GameObject> these;
 	
 	
-	public Destroyable(int x, int y, Texture tex, int width, int height, int hp, int speed, Direction dir, ConcurrentLinkedQueue<GameObject> destroyableList) {
+	public Destroyable(int x, int y, Texture tex, int width, int height, int hp, int speed, Direction dir, ConcurrentLinkedQueue<GameObject> destroyableList, GlobalVars globalVars) {
 		super(x, y, tex, width, height);
+		this.globalVars = globalVars;
 		this.hp = hp;
 		this.speed = speed;
 		this.dir = dir;
@@ -45,6 +47,9 @@ public abstract class Destroyable extends GameObject {
 	public void collide(Damager d) {
 		this.hp -= d.getDamage();
 		super.draw = this.hp > 0;
+		if(!draw){
+			globalVars.money += 100;
+		}
 	}
 
 	public void move(double delta) {		

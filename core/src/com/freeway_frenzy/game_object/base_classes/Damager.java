@@ -8,7 +8,7 @@ import com.freeway_frenzy.GameObject;
 public abstract class Damager extends GameObject {
     private int damage;
 
-    public Damager(int x, int y, Texture tex, int width, int height, int damage){
+    public Damager(int x, int y, Texture tex, int width, int height, int damage, GlobalVars globalVars){
         super(x, y, tex, width, height);
         this.damage = damage;
 

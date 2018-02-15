@@ -3,14 +3,16 @@ package com.freeway_frenzy.game_object.damager;
 import com.badlogic.gdx.graphics.Texture;
 import com.freeway_frenzy.game_object.base_classes.Damager;
 import com.freeway_frenzy.game_object.base_classes.Destroyable;
+import com.freeway_frenzy.game_object.base_classes.GlobalVars;
+import jdk.nashorn.internal.objects.Global;
 
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class BallThing extends Damager {
     private Destroyable target;
     private ConcurrentLinkedQueue<Damager> damagers;
-    public BallThing(int x, int y, Destroyable target, ConcurrentLinkedQueue<Damager> damagers){
-        super(x, y, new Texture("ball_thing.png"), 32,32, 50);
+    public BallThing(int x, int y, Destroyable target, ConcurrentLinkedQueue<Damager> damagers, int damage, GlobalVars globalVars){
+        super(x, y, new Texture("ball_thing.png"), 32,32, damage, globalVars);
         this.target = target;
         this.damagers = damagers;
     }

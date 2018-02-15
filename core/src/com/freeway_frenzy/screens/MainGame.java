@@ -1,5 +1,6 @@
 package com.freeway_frenzy.screens;
 
+import java.awt.*;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -9,6 +10,7 @@ import java.util.stream.Collectors;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.freeway_frenzy.FFGame;
@@ -18,6 +20,7 @@ import com.freeway_frenzy.game_object.StoreMenu.Store;
 import com.freeway_frenzy.game_object.base_classes.Destroyable;
 import com.freeway_frenzy.game_object.base_classes.Destroyable.Direction;
 import com.freeway_frenzy.game_object.base_classes.Destroyer;
+import com.freeway_frenzy.game_object.base_classes.GlobalVars;
 import com.freeway_frenzy.game_object.base_classes.OnScreenItem;
 import com.freeway_frenzy.game_object.destroyable.Car;
 import com.freeway_frenzy.game_object.destroyable.Truck;
@@ -28,7 +31,7 @@ public class MainGame implements Screen {
 
     private float xRatio(int x) { return x * (1920 / this.game.getCamera().viewportWidth);  }
     private float yRatio(int y) { return (1080 - (y) * (1080 / this.game.getCamera().viewportHeight)) * .97f; }
-
+    public GlobalVars globalVars;
     private List<OnScreenItem> onScreenItems = new LinkedList<>();
     private Positions positions = new Positions();
 	private FFGame game;
@@ -44,9 +47,11 @@ public class MainGame implements Screen {
     public MainGame(FFGame game)  {
 		this.game = game;
 		this.tex = new Texture("background.png");
-		this.store = new Store();
+        globalVars = new GlobalVars();
+		this.store = new Store(globalVars);
 		storeButton = new StoreButton(this.store);
 		onScreenItems.add(storeButton);
+		globalVars.money = 1500;
 
         shapeRenderer.setAutoShapeType(true);
 
@@ -72,9 +77,9 @@ public class MainGame implements Screen {
 
 		if(Math.floor(Math.random() * 100) == 1) {
 			switch((int) Math.floor(Math.random() * 2)) {
-				case 1: objects.add(new Car(Positions.Lanes.values()[(int) Math.floor(Math.random() * 4)].x, -128, Direction.UP, objects));
+				case 1: objects.add(new Car(Positions.Lanes.values()[(int) Math.floor(Math.random() * 4)].x, -128, Direction.UP, objects, globalVars));
 				break;
-				case 0: objects.add(new Truck(Positions.Lanes.values()[(int) Math.floor(Math.random() * 4)].x, -128, Direction.UP, objects));
+				case 0: objects.add(new Truck(Positions.Lanes.values()[(int) Math.floor(Math.random() * 4)].x, -128, Direction.UP, objects, globalVars));
 				break;
 			}
 		}
@@ -93,13 +98,14 @@ public class MainGame implements Screen {
 
 		//Drawing
 		game.getSpriteBatch().begin();
-
+        game.getSpriteBatch().setColor(Color.WHITE);
 		game.getSpriteBatch().draw(tex, 0, 0);
 
 
 		if(Gdx.input.justTouched()) {
 			objects.forEach(x -> x.setSelect(false));
-			positions.getDestroyers().forEach(x -> x.setSelect(false));
+            positions.getDestroyers().stream().filter(Destroyer::isSelected).forEach(Destroyer::upgrade);
+            positions.getDestroyers().forEach(x -> x.setSelect(false));
 			objects.stream().filter(x -> x.isAtPosition(xRatio(Gdx.input.getX()), yRatio(Gdx.input.getY()))).forEach(x -> x.setSelect(true));
 
 
@@ -108,7 +114,7 @@ public class MainGame implements Screen {
 			if (!storeButton.storeVisible()) {
 				if (lastTouchedPosition != null) {
 					if (!positions.spaceOccupied(lastTouchedPosition) && cursorTexture != null) {
-						Destroyer d = store.getDestroyerByTexture(cursorTexture, xRatio(Gdx.input.getX()), yRatio(Gdx.input.getY()));
+						Destroyer d = store.getDestroyerByTexture(cursorTexture);
 						if (d != null) {
 							positions.addDestroyerAtPosition(lastTouchedPosition, d);
 						}
@@ -146,7 +152,7 @@ public class MainGame implements Screen {
         shapeRenderer.end();
 
         game.getSpriteBatch().begin();
-
+        game.getSpriteBatch().setColor(Color.WHITE);
 		onScreenItems.forEach(x -> x.draw(game.getSpriteBatch()));
 		if(cursorTexture != null){
 			storeButton.storeVisible(false);

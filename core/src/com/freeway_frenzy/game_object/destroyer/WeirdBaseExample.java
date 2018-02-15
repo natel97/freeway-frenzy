@@ -4,16 +4,19 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.freeway_frenzy.game_object.base_classes.Destroyable;
 import com.freeway_frenzy.game_object.base_classes.Destroyer;
+import com.freeway_frenzy.game_object.base_classes.GlobalVars;
 import com.freeway_frenzy.game_object.damager.BallThing;
 
 public class WeirdBaseExample extends Destroyer {
     Long lastShotTime;
     int timeOut;
-    public WeirdBaseExample(int x, int y, int range){
+    GlobalVars globalVars;
+    public WeirdBaseExample(int x, int y, int range, GlobalVars globalVars){
         super(x ,y, 160, 160, new Texture("platform_shoot_thing.png"), range);
         System.out.println("Creating weird base example thing at position:  " + x + "   " + y);
         lastShotTime = 1l;
         this.timeOut = 500;
+        this.globalVars = globalVars;
     }
 
     @Override
@@ -25,7 +28,7 @@ public class WeirdBaseExample extends Destroyer {
     public void shootSomething(Destroyable destroyable) {
         if(lastShotTime + this.timeOut < TimeUtils.millis()) {
             this.lastShotTime = TimeUtils.millis();
-            deadlyThings.add(new BallThing(this.x, this.y, destroyable, deadlyThings));
+            deadlyThings.add(new BallThing(this.x, this.y, destroyable, deadlyThings, this.damageByWeapon, globalVars));
         }
     }
 }

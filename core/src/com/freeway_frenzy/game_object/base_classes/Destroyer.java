@@ -12,8 +12,10 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.stream.Collectors;
 
 public abstract class Destroyer extends GameObject {
-	private int range;
+	protected int range;
 	protected ConcurrentLinkedQueue<Damager> deadlyThings;
+	protected int upgradeCost;
+	protected int damageByWeapon = 50;
 
 	public Destroyer(int x, int y, int width, int height, Texture tex, int range) {
 		super(x,y,tex, width, height);
@@ -22,6 +24,14 @@ public abstract class Destroyer extends GameObject {
 	}
 	
 	public int getRange() {return this.range; }
+	public int getUpgradeCost() { return this.upgradeCost; }
+
+	public void upgrade(){
+		System.out.println("inside upgrade!");
+		this.upgradeCost += upgradeCost * .25;
+		this.range += 50;
+		this.damageByWeapon += 10;
+	}
 
 	public abstract void shootSomething(com.freeway_frenzy.game_object.base_classes.Destroyable destroyable);
 
