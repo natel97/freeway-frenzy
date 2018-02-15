@@ -7,6 +7,7 @@ import com.freeway_frenzy.GameObject;
 import com.freeway_frenzy.game_object.base_classes.Damager;
 
 import java.util.List;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 public abstract class Destroyable extends GameObject {
 	public void destroyInstance() {
@@ -29,10 +30,10 @@ public abstract class Destroyable extends GameObject {
 	private int hp, speed;
 	private Direction dir;
 	private int MAX_HEALTH;
-	private List<GameObject> these;
+	private ConcurrentLinkedQueue<GameObject> these;
 	
 	
-	public Destroyable(int x, int y, Texture tex, int width, int height, int hp, int speed, Direction dir, List<GameObject> destroyableList) {
+	public Destroyable(int x, int y, Texture tex, int width, int height, int hp, int speed, Direction dir, ConcurrentLinkedQueue<GameObject> destroyableList) {
 		super(x, y, tex, width, height);
 		this.hp = hp;
 		this.speed = speed;
