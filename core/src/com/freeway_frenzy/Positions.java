@@ -58,9 +58,10 @@ public class Positions {
 		return destroyerTracker.containsKey(position);
 	}
 	public boolean addDestroyerAtPosition(DestroyerPositions position, Destroyer d){
-		if(spaceOccupied(position)){
+		if(spaceOccupied(position) || d == null){
 			return false;
 		}
+		d.setPosition(position.x, position.y);
 		destroyerTracker.put(position, d);
 		return true;
 	}

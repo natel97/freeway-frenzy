@@ -57,6 +57,10 @@ public abstract class Destroyer extends GameObject {
 	@Override
 	public void step(Float delta){
 		deadlyThings.stream().filter(x -> x.isDraw()).forEach(x -> x.step(delta));
+	}
 
+    public void setPosition(int x, int y){
+		this.x = x;
+		this.y = y;
 	}
 }
