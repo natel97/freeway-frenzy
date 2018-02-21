@@ -32,10 +32,11 @@ public abstract class Destroyable extends GameObject {
 	private Direction dir;
 	private int MAX_HEALTH;
 	private ConcurrentLinkedQueue<GameObject> these;
+	private boolean alreadyAdded = false;
 	
 	
 	public Destroyable(int x, int y, Texture tex, int width, int height, int hp, int speed, Direction dir, ConcurrentLinkedQueue<GameObject> destroyableList, GlobalVars globalVars) {
-		super(x, y, tex, width, height);
+		super(x, y, tex, width, height, globalVars);
 		this.globalVars = globalVars;
 		this.hp = hp;
 		this.speed = speed;
@@ -47,8 +48,10 @@ public abstract class Destroyable extends GameObject {
 	public void collide(Damager d) {
 		this.hp -= d.getDamage();
 		super.draw = this.hp > 0;
-		if(!draw){
+		if(!draw && !alreadyAdded){
 			globalVars.money += 100;
+			alreadyAdded = true;
+			these.remove(this);
 		}
 	}
 

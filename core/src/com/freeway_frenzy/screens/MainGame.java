@@ -51,7 +51,7 @@ public class MainGame implements Screen {
 		this.store = new Store(globalVars);
 		storeButton = new StoreButton(this.store);
 		onScreenItems.add(storeButton);
-		globalVars.money = 1500;
+		globalVars.money = 6000;
 
         shapeRenderer.setAutoShapeType(true);
 
@@ -60,8 +60,8 @@ public class MainGame implements Screen {
 				Gdx.audio.newMusic(Gdx.files.internal("SadSong.ogg")),
 				Gdx.audio.newMusic(Gdx.files.internal("AnotherSong.ogg"))
 		);
-        songs.get(1).play();
-        songs.get(1).setLooping(true);
+        songs.get(0).play();
+        songs.get(0).setLooping(true);
 	}
 
 	@Override
@@ -104,7 +104,6 @@ public class MainGame implements Screen {
 
 		if(Gdx.input.justTouched()) {
 			objects.forEach(x -> x.setSelect(false));
-            positions.getDestroyers().stream().filter(Destroyer::isSelected).forEach(Destroyer::upgrade);
             positions.getDestroyers().forEach(x -> x.setSelect(false));
 			objects.stream().filter(x -> x.isAtPosition(xRatio(Gdx.input.getX()), yRatio(Gdx.input.getY()))).forEach(x -> x.setSelect(true));
 
@@ -128,7 +127,7 @@ public class MainGame implements Screen {
 			} else {
 				cursorTexture = store.getDestroyerAtPosition(xRatio(Gdx.input.getX()), yRatio(Gdx.input.getY()));
 			}
-
+			positions.getDestroyers().forEach(x -> x.isAtPosition(xRatio(Gdx.input.getX()),yRatio(Gdx.input.getY())));
 		}
 
 			cursorX = (int) xRatio(Gdx.input.getX());
@@ -158,10 +157,10 @@ public class MainGame implements Screen {
 			storeButton.storeVisible(false);
 			game.getSpriteBatch().draw(cursorTexture, cursorX - 80, cursorY -80, 160, 160);
 		}
+		positions.getDestroyers().forEach(x->x.drawLater(game.getSpriteBatch()));
 		game.getSpriteBatch().end();
 		
 		//After Drawing
-
 
 	}
 

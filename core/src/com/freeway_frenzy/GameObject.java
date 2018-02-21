@@ -10,10 +10,10 @@ public abstract class GameObject {
 	
 	protected int x, y, width, height;
 	protected Texture tex;
-	protected boolean draw;
-	protected boolean selected;
+	protected boolean draw, selected;
+	protected GlobalVars globalVars;
 	
-	public GameObject(int x, int y, Texture tex, int width, int height) {
+	public GameObject(int x, int y, Texture tex, int width, int height, GlobalVars globalVars) {
 		this.x = x;
 		this.y = y;
 		this.tex = tex;
@@ -21,6 +21,7 @@ public abstract class GameObject {
 		this.height = height;
 		this.draw = true;
 		this.selected = false;
+		this.globalVars = globalVars;
 	}
 	
 	public GameObject() {}
@@ -52,8 +53,14 @@ public abstract class GameObject {
 			shapeRenderer.rect(x-width/2, y-height/2, width, height);
 		}
 	}
+
+	public void drawLater(SpriteBatch batch){
+
+	}
 	public int getX() { return this.x; }
 	public int getY() { return this.y; }
-	public boolean isDraw() { return this.draw; }
+	public boolean isDraw() { return draw; }
+
+
 
 }

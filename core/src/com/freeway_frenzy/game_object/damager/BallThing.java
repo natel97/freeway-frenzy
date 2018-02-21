@@ -9,10 +9,8 @@ import jdk.nashorn.internal.objects.Global;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class BallThing extends Damager {
-    private Destroyable target;
-    private ConcurrentLinkedQueue<Damager> damagers;
     public BallThing(int x, int y, Destroyable target, ConcurrentLinkedQueue<Damager> damagers, int damage, GlobalVars globalVars){
-        super(x, y, new Texture("ball_thing.png"), 32,32, damage, globalVars);
+        super(x, y, new Texture("ball_thing.png"), 32,32, damage, globalVars, target, damagers);
         this.target = target;
         this.damagers = damagers;
     }

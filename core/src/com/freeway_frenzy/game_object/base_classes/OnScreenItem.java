@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 public abstract class OnScreenItem {
     private int x, y, width, height;
     private boolean visible;
-    private Texture texture;
+    protected Texture texture;
 
     public OnScreenItem(int x, int y, Texture texture, int width, int height, boolean visible){
         this.x = x;

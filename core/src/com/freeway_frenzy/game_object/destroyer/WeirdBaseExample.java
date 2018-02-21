@@ -11,9 +11,9 @@ public class WeirdBaseExample extends Destroyer {
     Long lastShotTime;
     int timeOut;
     GlobalVars globalVars;
-    public WeirdBaseExample(int x, int y, int range, GlobalVars globalVars){
-        super(x ,y, 160, 160, new Texture("platform_shoot_thing.png"), range);
-        System.out.println("Creating weird base example thing at position:  " + x + "   " + y);
+    public WeirdBaseExample(int x, int y, int range, int purchasedCost, GlobalVars globalVars){
+        super(x ,y, 160, 160, new Texture("platform_shoot_thing.png"), range, purchasedCost, globalVars);
+        this.range = range;
         lastShotTime = 1l;
         this.timeOut = 500;
         this.globalVars = globalVars;
